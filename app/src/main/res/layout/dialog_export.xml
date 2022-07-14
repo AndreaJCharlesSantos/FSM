@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exportar como:"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:paddingBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Le permitirá guardar sus cambios en cualquiera de los siguientes formatos."
+        android:textSize="19dp"
+        android:textAlignment="center"
+        android:textStyle="italic"
+        android:paddingBottom="10dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExpLatex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/latex"
+                app:iconSize="50dp"
+                app:iconPadding="4dp"
+                android:text="LATEX">
+            </com.google.android.material.button.MaterialButton>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExpPNG"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/png"
+                app:iconSize="50dp"
+                app:iconPadding="4dp"
+                android:text="PNG">
+            </com.google.android.material.button.MaterialButton>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/andre/OneDrive/Escritorio/git 3 ._/FSM-app/app/src/main/res/layout/dialog_delete.xml" value="0.25" />
+        <entry key="..\:/Users/juriegas/AndroidStudioProjects/Iti27849u2_equipo_01/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/juriegas/AndroidStudioProjects/Iti27849u2_equipo_01/app/src/main/res/layout/dialog_export.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/juriegas/AndroidStudioProjects/Iti27849u2_equipo_01/app/src/main/res/layout/dialog_menu.xml" value="0.35260416666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
