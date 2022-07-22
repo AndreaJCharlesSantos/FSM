@@ -1,29 +1,42 @@
 package com.upv.pm_2022.iti_27849_u2_equipo_04;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
 
-import com.upv.pm_2022.iti_27849_u2_equipo_04.DeleteDialog;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Features:
@@ -39,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout botones;
     Dialog dialog_export, dialog_menu;
     DeleteDialog deleteDialog;
-
     private static final String TAG = "Main_Activity";
     private Bitmap bitmap;
     private Canvas canvas;
@@ -122,13 +134,29 @@ public class MainActivity extends AppCompatActivity {
 
         //Listener para PNG
         expPNG.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                //Las acciones para exportar en PNG
+
+                capturaPantalla(getWindow().getDecorView());
+                vista.bitmapToImage();
+                bitmap = save(vista);
+
+                File file = new File(Environment.getExternalStorageDirectory().toString() +
+                        '/' + FILE_NAME + ".png");
+                try {
+                    file.delete(); file.createNewFile();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(file));
+                    Toast.makeText(getBaseContext(), "PNG file exported into root folder",
+                            Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(getBaseContext(), "An error occurred", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+
+
             }
         });
-
-//        canvas = new Canvas(bitmap);
         // want fullscreen, we hide Activity's title and notification bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -143,6 +171,43 @@ public class MainActivity extends AppCompatActivity {
 
         //setContentView(new DragAndDropView(this));
     }
+
+
+    private File capturaPantalla(View v) {
+        View rootview = v.getRootView();
+        rootview.setDrawingCacheEnabled(true);
+        Bitmap bmp = rootview.getDrawingCache();
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.getDefault());
+        String fechaComoCadena = sdf.format(new Date());
+
+        File file = new File(Environment.getExternalStorageDirectory() + File.separator + fechaComoCadena + ".jpg");
+        try {
+            if (file.createNewFile()) {
+                try (FileOutputStream outputStream = new FileOutputStream(file)) {
+                    outputStream.write(bytes.toByteArray());
+                    outputStream.close();
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        rootview.setDrawingCacheEnabled(false);
+        return file;
+    }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    Bitmap save(View v) {
+        Bitmap b = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.RGBA_F16);
+        Canvas c = new Canvas(b);
+        v.draw(c);
+        return b;
+    }
+
 
     /**
      * Get the latex representation of the graph
